@@ -1,0 +1,240 @@
+...........Sum of the prime number still 100................
+
+#!/usr/bin/bash
+
+sum=0
+for num in {1..100}; do
+    is_prime=1
+    if [ $num -eq 1 ]; then
+        is_prime=0
+    fi
+    for (( i=2; i<=num/2; i++ )); do
+        if [ $((num%i)) -eq 0 ]; then
+            is_prime=0
+            break
+        fi
+    done
+
+    if [ $is_prime -eq 1 ]; then
+        sum=$((sum + num))
+    fi
+done
+
+echo "Sum of prime numbers from 1 to 100 is: $sum"
+
+
+
+
+............Convert seconds to hour,minute and second.................
+
+
+#!/usr/bin/bash
+
+convert_seconds() {
+    local seconds=$1
+    local hours=$((seconds / 3600))
+    local minutes=$(( (seconds % 3600) / 60 ))
+    local seconds=$((seconds % 60))
+    
+    echo "$hours hour(s) $minutes minute(s) $seconds second(s)"
+}
+
+seconds=5000
+convert_seconds "$seconds"
+
+
+
+.............Print numbers between 1 to 100 wich are divisible by 3,5 and by both..........
+
+
+#!/usr/bin/bash
+
+for num in {1..100}
+do
+	if [ $((num%5)) -eq 0 ] && [ $((num%3)) -eq 0 ]; 
+	then
+		echo "$num"
+		
+	fi
+done
+
+
+
+............print the ASCII value given character..........
+
+
+#!/usr/bin/bash
+
+read -p "Enter a character: " char
+
+ascii_value=$(printf "%d" "'$char'")
+
+echo "The ASCII value of '$char' is $ascii_value."
+
+
+............3,5 Bedima .......................
+
+
+#!/usr/bin/bash
+
+for (( i = 0; i < 100; i++ )); do
+	if (($i%3==0)); then 
+		if (($i%5==0)); then
+			echo "$i"
+		fi
+	fi
+done
+
+............high mark lower  marks 10 subjects.................
+
+
+#!/bin/bash
+echo "enter 10 subject marks:"
+echo -n "marks: "
+read -a marks
+
+#selection sort algorithm desending order
+for ((i=0;i< ${#marks[@]}-1; i++)); do
+    for ((j=i+1;j< ${#marks[@]}; j++)); do
+        if [ "${marks[j]}" -gt "${marks[i]}" ]; then
+            temp="${marks[j]}"
+            marks[j]="${marks[i]}"
+            marks[i]="$temp"
+        fi
+    done
+done
+
+# for items in "${marks[@]}"; do
+#     echo "$items "
+# done
+
+# dispaly accesnding order
+for ((i="${#marks[@]}"; i >= 0; i--)); do
+    echo -n "${marks[i]} "
+done
+
+echo "highest mark: ${marks[0]}"
+lower=$((${#marks[@]}-1))
+echo "lowest mark: ${marks[$lower]}"
+
+# 90% complete
+
+
+
+
+.........readable,writerbal,executable...........
+
+
+
+#!/bin/bash
+file_exists(){
+
+    echo "File exists check-----------"
+    echo -n "enter file: "
+    read -r file
+
+    if [ -e "$file" ]; then
+        echo "file exists."
+        echo ""
+
+        if [ -r "$file" ];then
+            echo "file is readble."
+        else
+            echo "file is not readble"
+        fi
+
+        if [ -w "$file" ];then
+            echo "file is writeble."
+        else
+            echo "file is not writeble"
+        fi
+
+        if [ -x "$file" ];then
+            echo "file is executable."
+        else
+            echo "file is not executable"
+        fi
+
+    else
+        echo "file not exists."
+
+        echo "plese enter new file location"
+        echo -n "location: "
+        read -r lok
+
+        touch "$lok"/"$file"
+    fi
+    read
+    main
+}
+main(){
+    #clear console
+    clear
+
+    #show menu
+    cat menu.txt
+
+    #get user input
+    echo -n "choose your input: "
+    read -r input
+    
+    case $input in
+        a)
+            #case
+            file_exists
+        ;;
+        b)
+            exit
+        ;;
+        *)
+            echo "invalid"
+            read
+            main
+        ;;
+    esac   
+}
+
+main
+
+
+
+////////////////////
+
+
+
+#!/bin/bash
+
+main_menu(){
+
+	clear
+
+	cat main.txt
+
+	echo
+	echo -n "user input:"
+	read -r input
+	
+
+	if ["$input" == ""]; then
+		echo "empty value.press return key and enter valid input"
+		read
+		main_menu
+	fi
+
+	case $input in
+
+		1)
+			#case
+		;;
+
+
+		*)
+			echo "empty value.press return key and enter valid input"
+		    read
+		    main_menu
+		;;
+	esac
+
+}
+
+main_menu
